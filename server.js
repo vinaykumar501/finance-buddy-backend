@@ -28,9 +28,7 @@ app.get('/', (req, res) => {
 });
 
 
-// ======================== PERSON ROUTES ========================
 
-// ➕ Create person
 app.post('/api/person', async (req, res) => {
   try {
     const newPerson = new Person(req.body);
@@ -78,9 +76,7 @@ app.delete('/api/person/:id', async (req, res) => {
 });
 
 
-// ======================== TRANSACTION ROUTES ========================
 
-// ➕ Create transaction
 app.post('/api/transaction', async (req, res) => {
   try {
     const newTxn = new Transaction(req.body);
