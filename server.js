@@ -4,13 +4,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Render or local compatible
+const PORT = process.env.PORT || 5000; 
 
-// ✅ Middleware
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// ✅ Connect to MongoDB (Atlas or Local fallback)
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/financeBuddy', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -18,17 +18,17 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/financeBu
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// ✅ Load Models
+
 const Person = require('./models/Person');
 const Transaction = require('./models/Transaction');
 
-// ✅ Root route (basic health check)
+//check
 app.get('/', (req, res) => {
   res.send('Hello from Finance Buddy backend!');
 });
 
 
-
+//add
 app.post('/api/person', async (req, res) => {
   try {
     const newPerson = new Person(req.body);
@@ -39,7 +39,7 @@ app.post('/api/person', async (req, res) => {
   }
 });
 
-// 📄 Get all persons
+//all
 app.get('/api/person', async (req, res) => {
   try {
     const people = await Person.find();
@@ -49,7 +49,7 @@ app.get('/api/person', async (req, res) => {
   }
 });
 
-// ✏️ Update person by ID
+//up
 app.put('/api/person/:id', async (req, res) => {
   try {
     const updated = await Person.findOneAndUpdate(
@@ -64,7 +64,7 @@ app.put('/api/person/:id', async (req, res) => {
   }
 });
 
-// 🗑️ Delete person by ID
+// del
 app.delete('/api/person/:id', async (req, res) => {
   try {
     const deleted = await Person.findOneAndDelete({ id: req.params.id });
@@ -76,7 +76,7 @@ app.delete('/api/person/:id', async (req, res) => {
 });
 
 
-
+//add
 app.post('/api/transaction', async (req, res) => {
   try {
     const newTxn = new Transaction(req.body);
@@ -87,7 +87,7 @@ app.post('/api/transaction', async (req, res) => {
   }
 });
 
-// 📄 Get all transactions
+//all
 app.get('/api/transaction', async (req, res) => {
   try {
     const txns = await Transaction.find();
@@ -97,7 +97,7 @@ app.get('/api/transaction', async (req, res) => {
   }
 });
 
-// 🗑️ Delete transaction by ID
+//del
 app.delete('/api/transaction/:id', async (req, res) => {
   try {
     const deleted = await Transaction.findByIdAndDelete(req.params.id);
@@ -108,7 +108,7 @@ app.delete('/api/transaction/:id', async (req, res) => {
   }
 });
 
-// 🗑️ Delete all transactions for a person
+// del all
 app.delete('/api/transaction/person/:personId', async (req, res) => {
   try {
     await Transaction.deleteMany({ personId: req.params.personId });
@@ -119,7 +119,6 @@ app.delete('/api/transaction/person/:personId', async (req, res) => {
 });
 
 
-// ======================== START SERVER ========================
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
