@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const transactionSchema = new mongoose.Schema({
-  personId: String, // serial number of the person
+  personId: String, 
   amount: Number,
-  type: String, // "give" or "receive"
+  type: String, 
   reason: String,
   date: String
 });
